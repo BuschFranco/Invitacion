@@ -1,0 +1,111 @@
+---
+const nombreP = "Lucía Luján"
+import Intro from '../components/Intro.astro';
+import Layout from '../layouts/Layout.astro';
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<Layout>
+	<div class="conteinerTop">
+<h2>Te invito a mi fiesta de cumpleaños!</h2>
+    <h3>{nombreP}</h3>
+       <p>Sábado, 6 de septiembre de 2025</p>
+        <p>Banfield, Ciudad autónomas de buenos aires</p>
+
+
+		<h3>Celebro mi primer añito con las personas que me van a acompañar el resto de mi vida</h3>
+ <img src="picuno.jpg" class="imguno">
+
+			<h2>Recepción<h2>
+	<p>13:00, Malaku Eventos</p>
+	<p>Bynnon 2368, José Mármol</p>
+	<p>Confirmar Asistencia</p>
+				<h2>Regalo</h2>
+			<p>Mi mayor y preciado regalo, es tu presencia</p>
+
+</div>
+
+<div class="conteinerMid">
+
+<h3>Más que un simple cumpleaños, el primero!</h3>
+<h2>Deseo poder compartirlo con ustedes, y que lo disfruten conmigo, que la pasen todos bien!</h2>
+<h2>Para que festejemos, faltan...</h2>
+
+<!--- cuenta regresiva acá -->
+</div>
+
+<div class="conteinerBottom">
+	<i class="fa-solid fa-location-dot"></i>
+	<h3>Ubicacion</h3>
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3276.5851531305957!2d-58.3768925!3d-34.79121750000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcd3341b6014f7%3A0x853ba324a9ff8c66!2sMalaku%20Eventos!5e0!3m2!1ses!2sar!4v1755103558734!5m2!1ses!2sar" ></iframe></div>
+	<h2>Registro de asistencia</h2>
+	<p>Es muy importante para mi que puedas confirmar lo antes posible si vas a poder asistir y acompañarme y si tenes alguna reestricción alimentaria.</p>
+	 <button>Detalles</button>
+
+
+<Intro />
+	
+</Layout>
+
+
+<style>
+	.conteinerTop p{
+		 font-family: "Libertinus Serif", serif;
+		   font-weight: 400;
+  font-style: normal;
+
+	font-size: 25px;
+}
+.conteinerTop h3{
+	font-size: 40px;
+}
+.conteinerTop{
+ 
+display: row;
+text-align: center;
+background-color: pink;
+border-radius: 2%;
+justify-content: center;
+margin: 1vh;
+padding: 1%;
+
+}
+.conteinerTop .imguno{
+		width: 80%;
+		border-radius: 7%;
+}
+.conteinerMid{
+	justify-content: center;
+	display: row;
+	text-align: center;
+	background-color: violet;
+	margin: 1vh;
+	padding: 1%;
+	border-radius: 2%;
+
+}
+	
+.conteinerMid h2{
+font-family: "Libertinus Serif", serif;
+font-weight: 400;
+font-style: normal;
+font-size: 25px;
+}
+.conteinerMid h3{
+	font-size: 40px;
+}
+
+.conteinerBottom{
+	display: row;
+	justify-items: center;
+	text-align: center;
+	font-size: 50px;
+}
+.conteinerBottom iframe{
+	width: 50%;
+	height: 30rem;
+
+}
+</style>
