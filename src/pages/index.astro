@@ -27,11 +27,40 @@ import RsvpForm from '../components/RsvpForm.astro';
 			<img src="picuno.jpg" class="imguno" alt="Foto de {nombreP}">
 		</div>
 
+		<!-- Countdown movido aquí, justo después de la foto -->
+		<div class="countdown-section">
+			<h2>Para que festejemos, faltan...</h2>
+			<div class="countdown" id="countdown">
+				<div class="countdown-item">
+					<span id="days">00</span>
+					<span class="countdown-label">Días</span>
+				</div>
+				<div class="countdown-item">
+					<span id="hours">00</span>
+					<span class="countdown-label">Horas</span>
+				</div>
+				<div class="countdown-item">
+					<span id="minutes">00</span>
+					<span class="countdown-label">Minutos</span>
+				</div>
+				<div class="countdown-item">
+					<span id="seconds">00</span>
+					<span class="countdown-label">Segundos</span>
+				</div>
+			</div>
+		</div>
+
 		<div class="event-details">
 			<h2>Recepción</h2>
 			<p><i class="fa-regular fa-clock"></i> 13:00, Malaku Eventos</p>
 			<p><i class="fa-solid fa-map-pin"></i> Bynnon 2368, José Mármol</p>
-			<p id="asistencia" class="confirmation"><i class="fa-solid fa-check-circle"></i> Confirmar Asistencia</p>
+			<a id="asistencia" href="#rsvp-section" class="confirmation"> Confirmar Asistencia</a>
+			
+			<!-- Mapa movido dentro de la sección de recepción -->
+			<div id="ubicacion" class="map-container">
+				<h3><i class="fa-solid fa-location-dot"></i> Ubicación</h3>
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3276.5851531305957!2d-58.3768925!3d-34.79121750000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcd3341b6014f7%3A0x853ba324a9ff8c66!2sMalaku%20Eventos!5e0!3m2!1ses!2sar!4v1755103558734!5m2!1ses!2sar" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			</div>
 		</div>
 
 		<div id="regalo" class="gift-section">
@@ -45,38 +74,9 @@ import RsvpForm from '../components/RsvpForm.astro';
 		<h3>¡Más que un simple cumpleaños, el primero!</h3>
 		<h2>Deseo poder compartirlo con ustedes, y que lo disfruten conmigo, ¡que la pasen todos bien!</h2>
 	</div>
-
-	<div class="countdown-section">
-		<h2>Para que festejemos, faltan...</h2>
-		<div class="countdown" id="countdown">
-			<div class="countdown-item">
-				<span id="days">00</span>
-				<span class="countdown-label">Días</span>
-			</div>
-			<div class="countdown-item">
-				<span id="hours">00</span>
-				<span class="countdown-label">Horas</span>
-			</div>
-			<div class="countdown-item">
-				<span id="minutes">00</span>
-				<span class="countdown-label">Minutos</span>
-			</div>
-			<div class="countdown-item">
-				<span id="seconds">00</span>
-				<span class="countdown-label">Segundos</span>
-			</div>
-		</div>
-	</div>
 </div>
 
 <div class="container conteinerBottom">
-	<div id="ubicacion" class="location-section">
-		<h3><i class="fa-solid fa-location-dot"></i> Ubicación</h3>
-		<div class="map-container">
-			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3276.5851531305957!2d-58.3768925!3d-34.79121750000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcd3341b6014f7%3A0x853ba324a9ff8c66!2sMalaku%20Eventos!5e0!3m2!1ses!2sar!4v1755103558734!5m2!1ses!2sar" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-		</div>
-	</div>
-
 	<RsvpForm />
 </div>
 
@@ -136,6 +136,10 @@ import RsvpForm from '../components/RsvpForm.astro';
 		border-radius: var(--container-border-radius);
 		box-shadow: var(--box-shadow);
 		text-align: center;
+	}
+
+	#asistencia{
+		cursor: pointer;
 	}
 
 	/* Estilos para la sección superior */
@@ -212,7 +216,28 @@ import RsvpForm from '../components/RsvpForm.astro';
 
 	.confirmation {
 		font-weight: bold;
+		font-size: 1.3rem;
 		color: var(--accent-color);
+		display: inline-block;
+		text-decoration: none;
+		background-color: var(--accent-color);
+		color: white;
+		padding: 1rem 2rem;
+		border-radius: 30px;
+		margin: .5rem 0;
+		transition: all 0.3s ease;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+		&:hover {
+			background-color: var(--primary-color);
+			transform: translateY(-2px);
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+		}
+
+		&:active {
+			transform: translateY(0);
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		}
 	}
 
 	/* Estilos para la sección media */
@@ -231,6 +256,14 @@ import RsvpForm from '../components/RsvpForm.astro';
 		font-size: 1.5rem;
 		font-weight: 400;
 		margin-bottom: 2rem;
+	}
+
+	.countdown-section {
+		background-color: var(--primary-color);
+		color: white;
+		padding: 1.5rem;
+		border-radius: 10px;
+		margin: 2rem 0;
 	}
 
 	.countdown-section h2 {
@@ -282,7 +315,13 @@ import RsvpForm from '../components/RsvpForm.astro';
 		margin: 1.5rem 0;
 		border-radius: 10px;
 		overflow: hidden;
-		box-shadow: var(--box-shadow);
+	}
+
+	.map-container h3 {
+		font-size: 1.5rem;
+		color: var(--primary-color);
+		margin-bottom: 1rem;
+		margin-top: 0rem;
 	}
 
 	.map-container iframe {
