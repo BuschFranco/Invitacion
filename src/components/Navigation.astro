@@ -1,0 +1,302 @@
+---
+const nombreP = "Lucía Luján"
+---
+
+<header>
+    <h1 class="nombreP">{nombreP}</h1>
+</header>
+
+<div class="mobile-nav-header">
+    <div class="mobile-name">{nombreP}</div>
+    <div class="menu-toggle">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+</div>
+
+<div class="nav-wrapper">
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href=".rsvp-section" class="nav-item">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Confirmar asistencia</span>
+            </a>
+            <a href="#ubicacion" class="nav-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Ubicación</span>
+            </a>
+            <a href="#regalo" class="nav-item">
+                <i class="fa-solid fa-gift"></i>
+                <span>Regalo</span>
+            </a>
+        </div>
+    </nav>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navContainer = document.querySelector('.nav-container');
+        const mainNav = document.querySelector('.main-nav');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        // Inicialmente ocultar el fondo de navegación en móvil
+        if (window.innerWidth <= 768 && mainNav) {
+            mainNav.classList.add('nav-hidden');
+        }
+
+        // Funcionalidad para el menú móvil
+        if (menuToggle && navContainer && mainNav) {
+            menuToggle.addEventListener('click', function() {
+                navContainer.classList.toggle('show');
+                
+                // Mostrar u ocultar el fondo de navegación
+                if (navContainer.classList.contains('show')) {
+                    mainNav.classList.remove('nav-hidden');
+                } else {
+                    mainNav.classList.add('nav-hidden');
+                }
+            });
+        }
+
+        // Cerrar el menú al hacer clic en un enlace (en móvil)
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                // Cerrar el menú móvil si está abierto
+                if (window.innerWidth <= 768 && navContainer && mainNav) {
+                    navContainer.classList.remove('show');
+                    mainNav.classList.add('nav-hidden');
+                }
+                
+                if (targetElement) {
+                    // Calcular el offset correcto considerando la navegación fija
+                    const navHeight = window.innerWidth <= 768 ? 60 : 60; // Ajustar según la altura de la navegación
+                    window.scrollTo({
+                        top: targetElement.offsetTop - navHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Efecto de resaltado para la sección activa en el navegador
+        const sections = document.querySelectorAll('section[id]');
+
+        function highlightNavItem() {
+            const scrollY = window.scrollY;
+            const navHeight = window.innerWidth <= 768 ? 60 : 60; // Ajustar según la altura de la navegación
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - navHeight - 40; // Ajuste adicional para activar un poco antes
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    navItems.forEach(item => {
+                        item.classList.remove('active');
+                        if (item.getAttribute('href') === `#${sectionId}`) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', highlightNavItem);
+        // Ejecutar una vez al cargar para establecer la sección activa inicial
+        highlightNavItem();
+
+        // Manejar cambios de tamaño de ventana
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 768 && navContainer && mainNav) {
+                if (!navContainer.classList.contains('show')) {
+                    mainNav.classList.add('nav-hidden');
+                }
+            } else if (mainNav) {
+                mainNav.classList.remove('nav-hidden');
+            }
+        });
+    });
+</script>
+
+<style>
+    header {
+        text-align: center;
+        padding: 1rem;
+        padding-top: 70px; /* Añadir espacio superior para evitar superposición con la navegación fija */
+        background-color: var(--primary-color);
+        color: white;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .nav-wrapper {
+        width: 100%;
+    }
+
+    .main-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: var(--primary-color);
+        padding: 0.5rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+    }
+    
+    /* Espacio para compensar la navegación fija */
+    .nav-wrapper {
+        width: 100%;
+        height: 60px; /* Ajustar según la altura de tu navegación */
+    }
+
+    .nav-container {
+        display: flex;
+        justify-content: space-around;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.8rem 1.5rem;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        border-bottom: 3px solid transparent;
+    }
+
+    .nav-item i {
+        font-size: 1.5rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .nav-item span {
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .nav-item:hover, .nav-item:focus {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-bottom: 3px solid white;
+        transform: translateY(-2px);
+    }
+
+    .nav-item.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-bottom: 3px solid white;
+        transform: translateY(-2px);
+    }
+
+    .mobile-nav-header {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .mobile-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .menu-toggle {
+        cursor: pointer;
+        font-size: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        header {
+            display: none;
+        }
+
+        .mobile-nav-header {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: var(--primary-color);
+        }
+        
+        /* Ajustar el espacio para la navegación móvil */
+        .nav-wrapper {
+            height: 60px; /* Ajustar según la altura de tu navegación móvil */
+        }
+
+        .main-nav {
+            padding: 0;
+            top: 60px; /* Altura del encabezado móvil */
+        }
+
+        .nav-container {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 0;
+        }
+
+        .nav-container.show {
+            display: flex;
+        }
+
+        .nav-item {
+            width: 100%;
+            padding: 1rem;
+            flex-direction: row;
+            justify-content: flex-start;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 0;
+        }
+        
+        /* Ocultar completamente la navegación cuando no está activa */
+        .main-nav.nav-hidden {
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            margin-bottom: 0;
+        }
+
+        .nav-item span {
+            font-size: 0.9rem;
+        }
+
+        .nav-item:hover, .nav-item:focus, .nav-item.active {
+            transform: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 4px solid white;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .mobile-name {
+            font-size: 1.3rem;
+        }
+
+        .menu-toggle {
+            font-size: 1.3rem;
+        }
+
+        .nav-item i {
+            font-size: 1rem;
+        }
+
+        .nav-item span {
+            font-size: 0.8rem;
+        }
+    }
+</style>
