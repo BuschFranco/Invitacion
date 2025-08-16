@@ -63,9 +63,37 @@ import RsvpForm from '../components/RsvpForm.astro';
 			</div>
 		</div>
 
-		<div id="regalo" class="gift-section">
-			<h2>Regalo</h2>
-			<p><i class="fa-solid fa-gift"></i> Mi mayor y preciado regalo, es tu presencia</p>
+		<!-- Galería de imágenes tipo slider -->
+		<div class="gallery-section">
+			<h2>Galería de Fotos</h2>
+			<div class="slider-container">
+				<div class="slider">
+					<div class="slide active">
+						<img src="picuno.jpg" alt="Foto 1 de Lucía">
+					</div>
+					<div class="slide">
+						<img src="picuno.jpg" alt="Foto 2 de Lucía">
+					</div>
+					<div class="slide">
+						<img src="picuno.jpg" alt="Foto 3 de Lucía">
+					</div>
+					<div class="slide">
+						<img src="picuno.jpg" alt="Foto 4 de Lucía">
+					</div>
+				</div>
+				<button class="slider-btn prev-btn" onclick="changeSlide(-1)">
+					<i class="fa-solid fa-chevron-left"></i>
+				</button>
+				<button class="slider-btn next-btn" onclick="changeSlide(1)">
+					<i class="fa-solid fa-chevron-right"></i>
+				</button>
+				<div class="slider-dots">
+					<span class="dot active" onclick="currentSlide(1)"></span>
+					<span class="dot" onclick="currentSlide(2)"></span>
+					<span class="dot" onclick="currentSlide(3)"></span>
+					<span class="dot" onclick="currentSlide(4)"></span>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -123,6 +151,44 @@ import RsvpForm from '../components/RsvpForm.astro';
 	// Inicializar la cuenta regresiva inmediatamente
 	updateCountdown();
 
+	// Funciones para el slider de la galería
+	let currentSlideIndex = 0;
+	const slides = document.querySelectorAll('.slide');
+	const dots = document.querySelectorAll('.dot');
+
+	function showSlide(index) {
+		// Remover clase active de todos los slides y dots
+		slides.forEach(slide => slide.classList.remove('active'));
+		dots.forEach(dot => dot.classList.remove('active'));
+
+		// Agregar clase active al slide y dot actual
+		slides[index].classList.add('active');
+		dots[index].classList.add('active');
+	}
+
+	function changeSlide(direction) {
+		currentSlideIndex += direction;
+
+		// Controlar los límites del slider
+		if (currentSlideIndex >= slides.length) {
+			currentSlideIndex = 0;
+		} else if (currentSlideIndex < 0) {
+			currentSlideIndex = slides.length - 1;
+		}
+
+		showSlide(currentSlideIndex);
+	}
+
+	function currentSlide(index) {
+		currentSlideIndex = index - 1;
+		showSlide(currentSlideIndex);
+	}
+
+	// Auto-play del slider (opcional)
+	setInterval(() => {
+		changeSlide(1);
+	}, 5000); // Cambia cada 5 segundos
+
 
 </script>
 
@@ -144,8 +210,9 @@ import RsvpForm from '../components/RsvpForm.astro';
 
 	/* Estilos para la sección superior */
 	.conteinerTop {
-		background-color: var(--secondary-color);
+		background: linear-gradient(135deg, #ffd1dc, #ffe4ec); /* degradado suave */
 		padding: 2rem;
+		margin-top: 4rem;
 	}
 
 	.invitation-header {
@@ -161,12 +228,18 @@ import RsvpForm from '../components/RsvpForm.astro';
 
 	.name {
 		font-size: 3rem;
-		color: var(--text-color);
+		font-style: italic;
+		color: white;
 		margin-bottom: 1.5rem;
+		margin-top: 0;
+		text-shadow: 0 .1rem .4rem black;
 	}
 
 	.date-location {
-		margin: 1.5rem 0;
+		display: inline-block;
+		padding: .4rem 1.2rem;
+		background-color: white;
+		border-radius: .8rem;
 	}
 
 	.date-location p {
@@ -175,7 +248,7 @@ import RsvpForm from '../components/RsvpForm.astro';
 	}
 
 	.message h3 {
-		font-size: 1.8rem;
+		font-size: 1.4rem;
 		font-style: italic;
 		color: var(--text-color);
 		margin: 1.5rem 0;
@@ -196,20 +269,24 @@ import RsvpForm from '../components/RsvpForm.astro';
 		transform: scale(1.02);
 	}
 
-	.event-details, .gift-section {
+	.event-details{
 		margin: 2rem 0;
 		padding: 1.5rem;
 		background-color: rgba(255, 255, 255, 0.7);
 		border-radius: 10px;
 	}
 
-	.event-details h2, .gift-section h2 {
+	.event-details h2{
 		color: var(--accent-color);
 		font-size: 2rem;
 		margin-bottom: 1rem;
 	}
 
-	.event-details p, .gift-section p {
+	.event-details h2{
+		margin-top: 0;
+	}
+
+	.event-details p{
 		font-size: 1.3rem;
 		margin: 0.7rem 0;
 	}
@@ -259,11 +336,12 @@ import RsvpForm from '../components/RsvpForm.astro';
 	}
 
 	.countdown-section {
+		display: inline-block;
+		width: 65%;
 		background-color: var(--primary-color);
 		color: white;
-		padding: 1.5rem;
+		padding: .5rem;
 		border-radius: 10px;
-		margin: 2rem 0;
 	}
 
 	.countdown-section h2 {
@@ -330,7 +408,105 @@ import RsvpForm from '../components/RsvpForm.astro';
 		border: none;
 	}
 
+	/* Estilos para la galería de imágenes */
+	.gallery-section {
+		margin: 2rem 0;
+		padding: 1.5rem;
+		background-color: rgba(255, 255, 255, 0.7);
+		border-radius: 10px;
+	}
 
+	.gallery-section h2 {
+		color: var(--accent-color);
+		font-size: 2rem;
+		margin-bottom: 1.5rem;
+		text-align: center;
+	}
+
+	.slider-container {
+		position: relative;
+		max-width: 600px;
+		margin: 0 auto;
+		border-radius: 15px;
+		overflow: hidden;
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+	}
+
+	.slider {
+		position: relative;
+		width: 100%;
+		height: 400px;
+	}
+
+	.slide {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		transition: opacity 0.5s ease-in-out;
+	}
+
+	.slide.active {
+		opacity: 1;
+	}
+
+	.slide img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 15px;
+	}
+
+	.slider-btn {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background-color: rgba(0, 0, 0, 0.5);
+		color: white;
+		border: none;
+		padding: 1rem;
+		cursor: pointer;
+		font-size: 1.2rem;
+		border-radius: 50%;
+		transition: background-color 0.3s ease;
+		z-index: 10;
+	}
+
+	.slider-btn:hover {
+		background-color: rgba(0, 0, 0, 0.8);
+	}
+
+	.prev-btn {
+		left: 10px;
+	}
+
+	.next-btn {
+		right: 10px;
+	}
+
+	.slider-dots {
+		text-align: center;
+		padding: 1rem 0;
+		background-color: rgba(255, 255, 255, 0.9);
+	}
+
+	.dot {
+		display: inline-block;
+		width: 12px;
+		height: 12px;
+		margin: 0 5px;
+		background-color: #bbb;
+		border-radius: 50%;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+	}
+
+	.dot.active,
+	.dot:hover {
+		background-color: var(--accent-color);
+	}
 
 	/* Media queries para responsividad */
 	@media (max-width: 768px) {
@@ -371,6 +547,24 @@ import RsvpForm from '../components/RsvpForm.astro';
 		.map-container iframe {
 			height: 300px;
 		}
+
+		/* Estilos responsivos para la galería */
+		.slider {
+			height: 300px;
+		}
+
+		.slider-btn {
+			padding: 0.8rem;
+			font-size: 1rem;
+		}
+
+		.prev-btn {
+			left: 5px;
+		}
+
+		.next-btn {
+			right: 5px;
+		}
 	}
 
 	@media (max-width: 480px) {
@@ -395,11 +589,11 @@ import RsvpForm from '../components/RsvpForm.astro';
 			font-size: 1.2rem;
 		}
 
-		.event-details h2, .gift-section h2, .rsvp-section h2 {
+		.event-details h2, .rsvp-section h2 {
 			font-size: 1.5rem;
 		}
 
-		.event-details p, .gift-section p {
+		.event-details p {
 			font-size: 1rem;
 		}
 
@@ -424,6 +618,24 @@ import RsvpForm from '../components/RsvpForm.astro';
 		.rsvp-button {
 			padding: 0.6rem 1.5rem;
 			font-size: 1rem;
+		}
+
+		/* Estilos responsivos para la galería en móviles pequeños */
+		.slider {
+			height: 250px;
+		}
+
+		.slider-btn {
+			padding: 0.6rem;
+			font-size: 0.9rem;
+		}
+
+		.gallery-section {
+			padding: 1rem;
+		}
+
+		.gallery-section h2 {
+			font-size: 1.5rem;
 		}
 	}
 </style>
