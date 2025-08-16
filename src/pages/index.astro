@@ -9,7 +9,7 @@ import RsvpForm from '../components/RsvpForm.astro';
 ---
 
 <Layout>
-	<div class="container conteinerTop">
+	<div id="inicio" class="container conteinerTop">
 		<div class="invitation-header">
 			<h2 class="title">¡Te invito a mi fiesta de cumpleaños!</h2>
 			<h3 class="name">{nombreP}</h3>
@@ -28,7 +28,7 @@ import RsvpForm from '../components/RsvpForm.astro';
 		</div>
 
 		<!-- Countdown movido aquí, justo después de la foto -->
-		<div class="countdown-section">
+		<div id="countdown" class="countdown-section">
 			<h2>Para que festejemos, faltan...</h2>
 			<div class="countdown" id="countdown">
 				<div class="countdown-item">
@@ -465,6 +465,7 @@ import RsvpForm from '../components/RsvpForm.astro';
 		border-radius: 15px;
 		overflow: visible;
 		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+		padding: 0 150px;
 	}
 
 	.slider {
@@ -481,8 +482,8 @@ import RsvpForm from '../components/RsvpForm.astro';
 		height: 100%;
 		opacity: 0;
 		transition: all 0.5s ease-in-out;
-		transform: scale(0.85);
-		filter: blur(3px);
+		transform: scale(0.9);
+		filter: blur(2px);
 		z-index: 1;
 	}
 
@@ -494,16 +495,17 @@ import RsvpForm from '../components/RsvpForm.astro';
 	}
 
 	.slide.prev, .slide.next {
-		opacity: 0.5;
+		opacity: 0.6;
 		z-index: 2;
+		filter: blur(3px);
 	}
 
 	.slide.prev {
-		transform: translateX(-30%) scale(0.85);
+		transform: translateX(-25%) scale(0.85);
 	}
 
 	.slide.next {
-		transform: translateX(30%) scale(0.85);
+		transform: translateX(25%) scale(0.85);
 	}
 
 	.slide img {
@@ -607,6 +609,11 @@ import RsvpForm from '../components/RsvpForm.astro';
 		}
 
 		/* Estilos responsivos para la galería */
+		.slider-container {
+			padding: 0 50px;
+			overflow: hidden;
+		}
+
 		.slider {
 			height: 300px;
 		}
@@ -622,6 +629,17 @@ import RsvpForm from '../components/RsvpForm.astro';
 
 		.next-btn {
 			right: 5px;
+		}
+
+		/* Ajustar previsualizaciones en tablet */
+		.slide.prev {
+			transform: translateX(-10%) scale(0.95);
+			filter: blur(2px);
+		}
+
+		.slide.next {
+			transform: translateX(10%) scale(0.95);
+			filter: blur(2px);
 		}
 	}
 
@@ -696,6 +714,11 @@ import RsvpForm from '../components/RsvpForm.astro';
 		}
 
 		/* Estilos responsivos para la galería en móviles pequeños */
+		.slider-container {
+			padding: 0;
+			overflow: hidden;
+		}
+
 		.slider {
 			height: 250px;
 		}
@@ -711,6 +734,17 @@ import RsvpForm from '../components/RsvpForm.astro';
 
 		.gallery-section h2 {
 			font-size: 1.5rem;
+		}
+
+		/* Eliminar transformaciones translateX en móviles pequeños */
+		.slide.prev, .slide.next {
+			transform: scale(0.95);
+			opacity: 0.2;
+			filter: none;
+		}
+
+		.slide {
+			transform: scale(0.95);
 		}
 	}
 </style>
