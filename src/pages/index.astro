@@ -81,10 +81,10 @@ import RsvpForm from '../components/RsvpForm.astro';
 						<img src="picuno.jpg" alt="Foto 4 de Lucía">
 					</div>
 				</div>
-				<button class="slider-btn prev-btn" onclick="changeSlide(-1)">
+				<button class="slider-btn prev-btn">
 					<i class="fa-solid fa-chevron-left"></i>
 				</button>
-				<button class="slider-btn next-btn" onclick="changeSlide(1)">
+				<button class="slider-btn next-btn">
 					<i class="fa-solid fa-chevron-right"></i>
 				</button>
 				<div class="slider-dots">
@@ -155,14 +155,28 @@ import RsvpForm from '../components/RsvpForm.astro';
 	let currentSlideIndex = 0;
 	const slides = document.querySelectorAll('.slide');
 	const dots = document.querySelectorAll('.dot');
+	const prevBtn = document.querySelector('.prev-btn');
+	const nextBtn = document.querySelector('.next-btn');
 
 	function showSlide(index) {
-		// Remover clase active de todos los slides y dots
-		slides.forEach(slide => slide.classList.remove('active'));
+		// Remover clase active, prev y next de todos los slides
+		slides.forEach(slide => {
+			slide.classList.remove('active', 'prev', 'next');
+		});
 		dots.forEach(dot => dot.classList.remove('active'));
 
-		// Agregar clase active al slide y dot actual
+		// Calcular índices de slides previo y siguiente
+		let prevIndex = index - 1;
+		let nextIndex = index + 1;
+
+		// Ajustar índices si están fuera de rango
+		if (prevIndex < 0) prevIndex = slides.length - 1;
+		if (nextIndex >= slides.length) nextIndex = 0;
+
+		// Agregar clases correspondientes
 		slides[index].classList.add('active');
+		slides[prevIndex].classList.add('prev');
+		slides[nextIndex].classList.add('next');
 		dots[index].classList.add('active');
 	}
 
@@ -183,6 +197,17 @@ import RsvpForm from '../components/RsvpForm.astro';
 		currentSlideIndex = index - 1;
 		showSlide(currentSlideIndex);
 	}
+
+	// Agregar event listeners a los botones
+	if (prevBtn && nextBtn) {
+		prevBtn.addEventListener('click', () => changeSlide(-1));
+		nextBtn.addEventListener('click', () => changeSlide(1));
+	}
+
+	// Inicializar el slider
+	document.addEventListener('DOMContentLoaded', () => {
+		showSlide(currentSlideIndex);
+	});
 
 	// Auto-play del slider (opcional)
 	setInterval(() => {
@@ -342,6 +367,7 @@ import RsvpForm from '../components/RsvpForm.astro';
 		color: white;
 		padding: .5rem;
 		border-radius: 10px;
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 	}
 
 	.countdown-section h2 {
@@ -354,12 +380,19 @@ import RsvpForm from '../components/RsvpForm.astro';
 		justify-content: center;
 		gap: 1.5rem;
 		margin: 2rem 0;
+		flex-wrap: wrap;
 	}
 
 	.countdown-item {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		margin: 0.5rem;
+		transition: transform 0.3s ease;
+	}
+
+	.countdown-item:hover {
+		transform: translateY(-5px);
 	}
 
 	.countdown-item span:first-child {
@@ -370,11 +403,13 @@ import RsvpForm from '../components/RsvpForm.astro';
 		padding: 0.5rem 1rem;
 		min-width: 70px;
 		text-align: center;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	}
 
 	.countdown-label {
 		font-size: 1rem;
 		margin-top: 0.5rem;
+		font-weight: 600;
 	}
 
 	/* Estilos para la sección inferior */
@@ -428,8 +463,9 @@ import RsvpForm from '../components/RsvpForm.astro';
 		max-width: 600px;
 		margin: 0 auto;
 		border-radius: 15px;
-		overflow: hidden;
+		overflow: visible;
 		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+		padding: 20px 0;
 	}
 
 	.slider {
@@ -445,11 +481,30 @@ import RsvpForm from '../components/RsvpForm.astro';
 		width: 100%;
 		height: 100%;
 		opacity: 0;
-		transition: opacity 0.5s ease-in-out;
+		transition: all 0.5s ease-in-out;
+		transform: scale(0.85);
+		filter: blur(3px);
+		z-index: 1;
 	}
 
 	.slide.active {
 		opacity: 1;
+		transform: scale(1);
+		filter: blur(0);
+		z-index: 3;
+	}
+
+	.slide.prev, .slide.next {
+		opacity: 0.5;
+		z-index: 2;
+	}
+
+	.slide.prev {
+		transform: translateX(-30%) scale(0.85);
+	}
+
+	.slide.next {
+		transform: translateX(30%) scale(0.85);
 	}
 
 	.slide img {
@@ -463,19 +518,22 @@ import RsvpForm from '../components/RsvpForm.astro';
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
-		background-color: rgba(0, 0, 0, 0.5);
+		background-color: var(--accent-color);
 		color: white;
 		border: none;
 		padding: 1rem;
 		cursor: pointer;
 		font-size: 1.2rem;
 		border-radius: 50%;
-		transition: background-color 0.3s ease;
+		transition: all 0.3s ease;
 		z-index: 10;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	}
 
 	.slider-btn:hover {
-		background-color: rgba(0, 0, 0, 0.8);
+		background-color: var(--primary-color);
+		transform: translateY(-50%) scale(1.1);
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 	}
 
 	.prev-btn {
@@ -597,18 +655,35 @@ import RsvpForm from '../components/RsvpForm.astro';
 			font-size: 1rem;
 		}
 
+		.countdown-section {
+			width: 90%;
+			padding: 1rem 0.5rem;
+		}
+
+		.countdown-section h2 {
+			font-size: 1.4rem;
+			margin-bottom: 1rem;
+		}
+
 		.countdown {
 			flex-wrap: wrap;
+			gap: 0.5rem;
+			justify-content: space-around;
 		}
 
 		.countdown-item {
-			margin: 0.5rem;
+			margin: 0.3rem;
+			width: calc(50% - 1rem);
 		}
 
 		.countdown-item span:first-child {
 			font-size: 1.5rem;
 			min-width: 50px;
 			padding: 0.3rem 0.8rem;
+		}
+
+		.countdown-label {
+			font-size: 0.9rem;
 		}
 
 		.map-container iframe {

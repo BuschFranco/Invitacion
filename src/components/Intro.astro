@@ -4,44 +4,81 @@ const nombreP = "Lucía Luján";
 
 <div class="intro-container">
     <div class="intro-content">
+        <div class="intro-decoration"></div>
         <h2>¡Gracias por ser parte de este día tan especial!</h2>
         <p>Con cariño,</p>
         <p class="signature">{nombreP}</p>
+        <div class="intro-decoration"></div>
     </div>
 </div>
 
 <style>
     .intro-container {
         margin: 3rem auto;
-        padding: 2rem;
-        background-color: var(--secondary-color);
-        box-shadow: var(--box-shadow);
+        padding: 3rem 2rem;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
         text-align: center;
+        border-radius: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .intro-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/background.svg');
+        background-size: cover;
+        opacity: 0.1;
+        z-index: 0;
+    }
+
+    .intro-content {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .intro-decoration {
+        height: 3px;
+        width: 100px;
+        background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        margin: 1.5rem auto;
     }
 
     .intro-content h2 {
-        font-size: 2rem;
+        font-size: 2.2rem;
         color: var(--accent-color);
         margin-bottom: 1.5rem;
         margin-top: 0;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     .intro-content p {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
         margin: 0.5rem 0;
+        color: var(--text-color);
     }
 
     .signature {
         font-family: "Libertinus Serif", serif;
-        font-size: 2.5rem;
+        font-size: 3rem;
         font-style: italic;
         color: var(--accent-color);
         margin-top: 1rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        transform: rotate(-5deg);
+        display: inline-block;
     }
 
     @media (max-width: 768px) {
         .intro-container {
-            padding: 1.5rem;
+            padding: 2.5rem 1.5rem;
             margin: 2rem 1rem;
         }
 
@@ -49,15 +86,21 @@ const nombreP = "Lucía Luján";
             font-size: 1.8rem;
         }
 
+        .intro-decoration {
+            width: 80px;
+            margin: 1.2rem auto;
+        }
+
         .signature {
-            font-size: 2rem;
+            font-size: 2.5rem;
         }
     }
 
     @media (max-width: 480px) {
         .intro-container {
-            padding: 1rem;
+            padding: 2rem 1rem;
             margin: 1.5rem 0.5rem;
+            border-radius: 15px;
         }
 
         .intro-content h2 {
@@ -68,8 +111,14 @@ const nombreP = "Lucía Luján";
             font-size: 1.1rem;
         }
 
+        .intro-decoration {
+            width: 60px;
+            margin: 1rem auto;
+        }
+
         .signature {
-            font-size: 1.8rem;
+            font-size: 2rem;
+            transform: rotate(-3deg);
         }
     }
 </style>
