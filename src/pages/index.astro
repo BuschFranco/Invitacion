@@ -9,7 +9,7 @@ import RsvpForm from '../components/RsvpForm.astro';
 ---
 
 <Layout>
-	<div class="container conteinerTop">
+	<div id="inicio" class="container conteinerTop">
 		<div class="invitation-header">
 			<h2 class="title">¡Te invito a mi fiesta de cumpleaños!</h2>
 			<h3 class="name">{nombreP}</h3>
@@ -28,9 +28,9 @@ import RsvpForm from '../components/RsvpForm.astro';
 		</div>
 
 		<!-- Countdown movido aquí, justo después de la foto -->
-		<div class="countdown-section">
+		<div id="countdown" class="countdown-section">
 			<h2>Para que festejemos, faltan...</h2>
-			<div class="countdown" id="countdown">
+			<div class="countdown" >
 				<div class="countdown-item">
 					<span id="days">00</span>
 					<span class="countdown-label">Días</span>
@@ -50,14 +50,14 @@ import RsvpForm from '../components/RsvpForm.astro';
 			</div>
 		</div>
 
-		<div class="event-details">
+		<div id="ubicacion" class="event-details">
 			<h2>Recepción</h2>
 			<p><i class="fa-regular fa-clock"></i> 13:00, Malaku Eventos</p>
 			<p><i class="fa-solid fa-map-pin"></i> Bynnon 2368, José Mármol</p>
 			<a id="asistencia" href="#rsvp-section" class="confirmation"> Confirmar Asistencia</a>
 			
 			<!-- Mapa movido dentro de la sección de recepción -->
-			<div id="ubicacion" class="map-container">
+			<div  class="map-container">
 				<h3><i class="fa-solid fa-location-dot"></i> Ubicación</h3>
 				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3276.5851531305957!2d-58.3768925!3d-34.79121750000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcd3341b6014f7%3A0x853ba324a9ff8c66!2sMalaku%20Eventos!5e0!3m2!1ses!2sar!4v1755103558734!5m2!1ses!2sar" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 			</div>
