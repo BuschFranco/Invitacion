@@ -5,7 +5,7 @@
     <h2>Registro de asistencia</h2>
     <p>Es muy importante para mí que puedas confirmar lo antes posible si vas a poder asistir y acompañarme, y si tienes alguna restricción alimentaria.</p>
     <div class="rsvp-form">
-        <form action="https://formsubmit.co/yochicos@gmail.com" method="POST">
+        <form action="https://formsubmit.co/ger.adrogue@gmail.com" method="POST">
         <input type="text" name="nombre" id="nombre" placeholder="Tu nombre" class="rsvp-input">
         <input type="number" name="invitados" id="invitados" placeholder="Número de invitados" class="rsvp-input">
         <textarea id="restricciones" name="restricciones" placeholder="¿Tienes alguna restricción alimentaria?" class="rsvp-input"></textarea>
@@ -29,6 +29,30 @@
         const invitadosInput = document.getElementById('invitados');
         const restriccionesInput = document.getElementById('restricciones');
         const rsvpForm = document.querySelector('.rsvp-form');
+        const form = document.querySelector('.rsvp-form form') as HTMLFormElement | null;
+        const linkAsistencia = document.getElementById('asistencia');
+        
+
+        if (form) {
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const formData = new FormData(form);
+
+                try {
+                    await fetch(form.action, {
+                        method: form.method,
+                        body: formData,
+                    });
+                    confirmarBtn.textContent = "Asistencia Confirmada";
+                    linkAsistencia.textContent = "Asistencia Confirmada";
+
+                    alert('Formulario enviado correctamente');
+                    form.reset();
+                } catch (error) {
+                    alert('Error al enviar el formulario. Por favor, inténtalo de nuevo más tarde.');
+                }
+            });
+        }
 
         if (confirmarBtn) {
             confirmarBtn.addEventListener('click', function() {
