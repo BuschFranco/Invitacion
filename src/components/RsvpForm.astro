@@ -31,6 +31,7 @@
         const rsvpForm = document.querySelector('.rsvp-form');
         const form = document.querySelector('.rsvp-form form') as HTMLFormElement | null;
         const linkAsistencia = document.getElementById('asistencia');
+
         
 
         if (form) {
@@ -43,9 +44,11 @@
                         method: form.method,
                         body: formData,
                     });
-                    linkAsistencia.textContent = "Asistencia Confirmada";
+                    linkAsistencia.display = "none";
+
                     alert('Formulario enviado correctamente');
                     form.reset();
+
                 } catch (error) {
                     alert('Error al enviar el formulario. Por favor, inténtalo de nuevo más tarde.');
                 }
@@ -73,6 +76,7 @@
                 });
 
                 // Mostrar mensaje de confirmación
+                confirmarBtn.style.display = 'none';
                 rsvpForm.style.display = 'none';
                 confirmacionMensaje.classList.remove('hidden');
                 confirmacionMensaje.style.display = 'block';
