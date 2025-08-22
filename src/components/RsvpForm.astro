@@ -10,6 +10,10 @@
         <input type="number" name="invitados" id="invitados" placeholder="Número de invitados" class="rsvp-input">
         <textarea id="restricciones" name="restricciones" placeholder="¿Tienes alguna restricción alimentaria?" class="rsvp-input"></textarea>
         <button class="rsvp-button" id="confirmar-btn">Confirmar Asistencia</button>
+            <div id="confirmacion-mensajeTop" class="confirmacion-mensajeTop hidden">
+                    <i class="fa-solid fa-heart"></i>
+                    <p>¡Gracias por confirmar tu asistencia!</p>
+            </div>
         <input type="hidden" name="_next" value="http://localhost:4321/">
         <input type="hidden" name="_captcha" value="false">
         </form>
@@ -31,6 +35,7 @@
         const rsvpForm = document.querySelector('.rsvp-form');
         const form = document.querySelector('.rsvp-form form') as HTMLFormElement | null;
         const linkAsistencia = document.getElementById('asistencia');
+        const ConfirmacionMensajeTop = document.querySelector('.confirmacion-mensajeTop');
 
         
 
@@ -44,7 +49,9 @@
                         method: form.method,
                         body: formData,
                     });
-                    linkAsistencia.display = "none";
+                    ConfirmacionMensajeTop.classList.remove('hidden');
+                    ConfirmacionMensajeTop.style.display = 'block';
+                    linkAsistencia.style.display = "none";
                     linkAsistencia.textContent = "¡Gracias por confirmar tu asistencia!";
 
                     alert('Formulario enviado correctamente');
