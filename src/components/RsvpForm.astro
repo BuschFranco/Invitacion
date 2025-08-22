@@ -18,7 +18,7 @@
         <input type="hidden" name="_captcha" value="false">
         </form>
     </div>
-    <div id="confirmacion-mensaje" class="confirmacion-mensaje hidden">
+    <div id="confirmacion-mensaje" class="confirmacion-mensajeTop hidden">
         <i class="fa-solid fa-heart"></i>
         <p>¡Gracias por confirmar tu asistencia!</p>
     </div>
@@ -51,7 +51,7 @@
                     });
                     ConfirmacionMensajeTop.classList.remove('hidden');
                     ConfirmacionMensajeTop.style.display = 'block';
-                    linkAsistencia.style.display = "none";
+                    linkAsistencia.disabled = true;
                     linkAsistencia.textContent = "¡Gracias por confirmar tu asistencia!";
 
                     alert('Formulario enviado correctamente');
